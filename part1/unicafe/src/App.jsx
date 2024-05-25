@@ -1,8 +1,29 @@
 import { useState } from 'react'
 
-const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>;
+const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>;
 
-const Display = ({value}) => <span>{value}</span>;
+const Display = (props) => <span>{props.value}</span>;
+
+const Statistics = (props) => {
+  const { g, n, b } = props;
+
+  const total = [g, n, b].reduce((acc, currValue) => acc + currValue, 0);
+
+  const averageFeedback = () => total !== 0 ? ((g * 1) + (n * 0) + (b * -1)) / total : 0;
+  const positiveFeedback = () => total !== 0 ? (g / total * 100) : 0;
+
+  return (
+    <div>
+      <h2>Statistics</h2>
+      <p>Good: <Display value={g} /></p>
+      <p>Neutral: <Display value={n} /></p>
+      <p>Bad: <Display value={b} /></p>
+      <p>Total: <Display value={total} /></p>
+      <p>Average: <Display value={averageFeedback()} /></p>
+      <p>Positive: <Display value={positiveFeedback()} />%</p>
+    </div>
+  );
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -20,11 +41,7 @@ const App = () => {
     }
   };
 
-  const total = [good, neutral, bad].reduce((acc, currValue) => acc + currValue, 0);
-
-  const averageFeedback = () => total !== 0 ? ((good * 1) + (neutral * 0) + (bad * -1)) / total : 0;
-
-  const positiveFeedback = () => total !== 0 ? (good / total * 100) : 0;
+  
 
   return (
     <div>
@@ -34,13 +51,7 @@ const App = () => {
       <Button handleClick={() => {increase("n")}} text="Neutral" />
       <Button handleClick={() => {increase("b")}} text="Bad" />
 
-      <h2>Statistics</h2>
-      <p>Good: <Display value={good} /></p>
-      <p>Neutral: <Display value={neutral} /></p>
-      <p>Bad: <Display value={bad} /></p>
-      <p>Total: <Display value={total} /></p>
-      <p>Average: <Display value={averageFeedback()} /></p>
-      <p>Positive: <Display value={positiveFeedback()} />%</p>
+      <Statistics g={good} b={bad} n={neutral} />
     </div>
   );
 };
