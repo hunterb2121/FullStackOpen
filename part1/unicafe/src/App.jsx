@@ -2,13 +2,13 @@ import { useState } from 'react'
 
 const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>;
 
-const Display = (props) => <span>{props.value}</span>;
+const Display = (props) => <td>{props.value}</td>;
 
 const StatisticLine = (props) => {
   return (
     <tr>
       <td>{props.text}</td>
-      <td>{props.value}</td>
+      <Display value={props.value} />
     </tr>
   );
 };
