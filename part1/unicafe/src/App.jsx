@@ -20,6 +20,12 @@ const App = () => {
     }
   };
 
+  const total = [good, neutral, bad].reduce((acc, currValue) => acc + currValue, 0);
+
+  const averageFeedback = () => total !== 0 ? ((good * 1) + (neutral * 0) + (bad * -1)) / total : 0;
+
+  const positiveFeedback = () => total !== 0 ? (good / total * 100) : 0;
+
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -32,6 +38,9 @@ const App = () => {
       <p>Good: <Display value={good} /></p>
       <p>Neutral: <Display value={neutral} /></p>
       <p>Bad: <Display value={bad} /></p>
+      <p>Total: <Display value={total} /></p>
+      <p>Average: <Display value={averageFeedback()} /></p>
+      <p>Positive: <Display value={positiveFeedback()} />%</p>
     </div>
   );
 };
